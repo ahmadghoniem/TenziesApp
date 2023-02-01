@@ -5,30 +5,114 @@ body {
   margin: 0;
   background-color: #0b2434;
   padding: 20px;
-
+  font-size: 16px;
   font-family: "Karla";
   font-style: normal;
 }
-main {
+
+.App {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
 }
 .game-container {
   background-color: #f5f5f5;
   max-width: 450px;
   height: 400px;
-  margin: auto 65px;
   border-radius: 10px;
   padding: 20px;
+  text-align: center;
 }
-.leaderboards {
+.Suggestions-board {
   height: 400px;
   width: 250px;
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 10px;
   color: black;
+}
+.leaderboard {
+  height: 400px;
+  width: 250px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 10px;
+  color: black;
+}
+.leaderboard-sort {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 15px;
+}
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+  counter-reset: item;
+  padding: 0;
+}
+.leaderboard-list li {
+  counter-increment: item;
+  font-size: 14px;
+}
+li:before {
+  margin-right: 10px;
+  content: counter(item);
+  background: lightblue;
+  border-radius: 6px 1px;
+  color: white;
+  width: 1.2em;
+  padding: 1px;
+  font-size: 12px;
+  text-align: center;
+  display: inline-block;
+}
+img.lb-icon {
+  width: 55%;
+  display: block;
+  margin: 0 auto;
+  vertical-align: middle;
+}
+.leaderboard-list > li:nth-child(1):before {
+  background: #e1ba39;
+  color: white;
+
+  background-repeat: no-repeat;
+}
+.leaderboard-list > li:nth-child(2):before {
+  background: #a9aab4;
+  color: white;
+}
+.leaderboard-list > li:nth-child(3):before {
+  background: #cf7c3b;
+  color: white;
+}
+
+.sort-leaderboard > button {
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  padding: 2px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  vertical-align: middle;
+  border: 1px solid;
+  border-radius: 4px;
+  color: #24292e;
+  background-color: #fafbfc;
+  border-color: #1b1f2326;
+  box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px,
+    rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition-property: color, background-color, border-color;
+}
+.sort-leaderboard > button:hover {
+  background-color: #f3f4f6;
+  border-color: #1b1f2326;
+  transition-duration: 0.1s;
 }
 .dice-container {
   display: grid;
@@ -54,11 +138,11 @@ main {
 }
 .roll-dice {
   background-color: #5d46f4;
-  color: white;
-  box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
   border-radius: 4px;
-  padding: 15px 25px;
+  box-shadow: 0px 3.2px 7.68px rgba(0, 0, 0, 0.18);
+  color: white;
   cursor: pointer;
+  padding: 15px 25px;
 }
 .roll-dice:focus {
   outline: none;
@@ -68,8 +152,12 @@ p {
   font-style: normal;
   font-weight: 400;
 }
-h1 {
+h3 {
   font-family: "Karla";
   font-style: normal;
   font-weight: 700;
+  text-align: center;
+}
+span.choosen {
+  background-color: aquamarine;
 }
