@@ -161,3 +161,24 @@ h3 {
 span.choosen {
   background-color: aquamarine;
 }
+.dice-container-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.roll-number,
+.time-elapsed {
+  width: 50px;
+  font-family: monospace;
+}
+.suggestion-textarea {
+  width: 100%;
+  height: 20%;
+  border-radius: 5px;
+  resize: none;
+}
+
+p.name-info {
+  font-size: 12.5px;
+}

@@ -14,8 +14,8 @@ function App() {
   const [leaderboard, setLeaderboard] = useState(
     () => JSON.parse(localStorage.getItem("leaderboard")) || []
   );
-  const [userName, setuserName] = useState(() =>
-    localStorage.getItem("userName")
+  const [userName, setuserName] = useState(
+    () => localStorage.getItem("tenziesName") || undefined
   );
   const [userId, setUserId] = useState(0);
   const [count, setCount] = useState(0);
@@ -66,7 +66,7 @@ function App() {
 
         //cleaning function set for the future (autoexecuted when "delay" change)
         return () => {
-          console.log("clear Interval: " + id);
+          //console.log("clear Interval: " + id);
           clearInterval(id);
         };
       }
@@ -138,18 +138,18 @@ function App() {
           </p>
           <div className="dice-container">{diceArr}</div>
 
-          <button className="roll-dice" onClick={rollDice}>
-            {!tenzies
-              ? `${count === 0 ? `Start!` : `roll ${count}`}`
-              : `play again ? ${count}`}
-          </button>
-          <span>
-            {((timeElapsed - startTime) / 1000).toFixed(2) < 0
-              ? 0
-              : ((timeElapsed - startTime) / 1000).toFixed(2)}
-          </span>
+          <div className="dice-container-bottom">
+            <span className="roll-number">{count}</span>
+            <button className="roll-dice" onClick={rollDice}>
+              {!tenzies ? `${count === 0 ? `Start!` : `Roll`}` : `Play again!`}
+            </button>
+            <p className="time-elapsed">
+              {((timeElapsed - startTime) / 1000).toFixed(2) >= 0 &&
+                ((timeElapsed - startTime) / 1000).toFixed(2)}
+            </p>
+          </div>
         </div>
-        <Suggestions />
+        <Suggestions userName={userName} setUserName={setuserName} />
       </main>
       <Footer />
     </>

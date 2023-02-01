@@ -20,15 +20,14 @@ export default function Leaderboard({ leaderboard, userId }) {
   let elesArr = leaderboard.map(
     ({ name, timeTaken, count, id } = leaderboard) => {
       return (
-        <li>
-          <span
-            className={`${userId === id && "choosen"}`}
-          >{`${name} ${count} ${timeTaken} sec `}</span>
+        <li className={` ${userId === id && "choosen"}`}>
+          <span>{name}</span>
+          <span>{count}</span>
+          <span>{timeTaken}</span>
         </li>
       );
     }
   );
-  //console.log(elesArr);
   return (
     <div className="leaderboard">
       <img className="lb-icon" src={lbIcon} />
