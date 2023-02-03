@@ -11,11 +11,14 @@ function App() {
   const [dice, setDice] = useState(() => allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [heldDice, setheldDice] = useState([...Array(10)]);
+  // const [leaderboard, setLeaderboard] = useState(
+  //   () => JSON.parse(localStorage.getItem("leaderboard")) || []
+  // );
   const [leaderboard, setLeaderboard] = useState(
     () => JSON.parse(localStorage.getItem("leaderboard")) || []
   );
   const [userName, setuserName] = useState(
-    () => localStorage.getItem("tenziesName") || undefined
+    () => localStorage.getItem("tenziesName") || "Guest"
   );
   const [userId, setUserId] = useState(0);
   const [count, setCount] = useState(0);
