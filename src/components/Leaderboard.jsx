@@ -19,7 +19,7 @@ export default function Leaderboard({ leaderboard, userId }) {
 
   let elesArr = leaderboard.map(({ name, timeTaken, count, id }) => {
     return (
-      <li className={`${userId === id ? "choosen" : ""}`}>
+      <li key={id} className={`${userId === id ? "choosen" : ""}`}>
         <span>{name}</span>
         <span>{count}</span>
         <span>{timeTaken}</span>
@@ -37,7 +37,7 @@ export default function Leaderboard({ leaderboard, userId }) {
         <button onClick={() => setSortBy("both")}>best of both!</button>
       </div>
       <ol className="grid">
-        <li class="false">
+        <li>
           <span>Name</span>
           <span>Rolls</span>
           <span>Time</span>

@@ -8,8 +8,8 @@ import Header from "./components/Header";
 import { nanoid } from "nanoid";
 import axios from "axios";
 function App() {
-  let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
-  let pantryBasketName = "Leaderboards";
+  const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
+  const pantryBasketName = "Leaderboards";
 
   const [dice, setDice] = useState(() => allNewDice());
   const [tenzies, setTenzies] = useState(false);
@@ -27,16 +27,16 @@ function App() {
   const [count, setCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const [interval, setIntervalState] = useState(null); //this is what made possible to cancel
+  const [interval, setIntervalState] = useState(null); //this is what made possible to exit the interval
 
   //USEEFFECT load leaderboard from pantry to leaderboard state
 
   useEffect(() => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     let arr = [];
     myHeaders.append("Content-Type", "application/json");
 
-    var config = {
+    const config = {
       method: "get",
       url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
       headers: {
@@ -68,11 +68,11 @@ function App() {
       setUserId(obj.id);
       // update our leaderboard JSON with the new record
 
-      var data = JSON.stringify({
+      const data = JSON.stringify({
         [obj.id]: obj,
       });
 
-      var config = {
+      const config = {
         method: "put",
         url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
         headers: {
@@ -93,8 +93,9 @@ function App() {
     }
   }, [heldDice]);
   // the reason why we have heldDice as a dependency instead of dice array is because the last move would be holding the last dice not rolling the last dice
+
   function useInterval(callback, delay) {
-    const savedCallback = useRef();
+    const savedCallback = useRef(); // we used useRef so the component won't rerender once it gets changed
 
     // Remember the latest function.
     useEffect(() => {
@@ -104,7 +105,7 @@ function App() {
     // Set up the interval.
     useEffect(() => {
       function tick() {
-        savedCallback.current();
+        savedCallback.current(); // execute the function that updates the current
       }
 
       if (delay !== null) {
@@ -118,24 +119,26 @@ function App() {
       }
     }, [delay]);
   }
+
   useInterval(() => {
     setTimeElapsed(new Date().getTime());
   }, interval);
 
-  useEffect(() => {
-    // localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-  }, [leaderboard]);
+  // useEffect(() => {
+  //   // localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  // }, [leaderboard]);
+
   function compareArrays(a, b) {
     if (JSON.stringify(a) === JSON.stringify(b)) {
+      // if the two arrays are equal (doesn't mean a winning condition yet)
+      // further check if there's only one unique element is selected on both (hence the new Set()) and equal on both
       let reducedA = new Set(a);
       let reducedB = new Set(a);
-      let cond1 = reducedA.keys().next().value === reducedB.keys().next().value;
+
+      let cond1 = [...reducedA][0] === [...reducedB][0];
       let cond2 = reducedA.size === 1 && reducedB.size === 1;
-      if (cond1 && cond2) {
-        return true;
-      } else {
-        return false;
-      }
+
+      return cond1 && cond2; // returns true or false based on the conditions
     } else {
       return false;
     }
@@ -156,7 +159,7 @@ function App() {
       }
       setDice((prevDiceSet) => {
         for (let i = 0; i < prevDiceSet.length; i++) {
-          if (heldDice[i] !== undefined) continue;
+          if (heldDice[i] !== undefined) continue; // skips the dies that are held
           prevDiceSet[i] = ~~(Math.random() * 6) + 1;
         }
         return prevDiceSet;

@@ -116,7 +116,8 @@ li:nth-child(4):before {
   content: "3rd";
 }
 
-.leaderboard-sort > button {
+.leaderboard-sort > button,
+.send-suggestion {
   display: inline-block;
   outline: 0;
   cursor: pointer;
@@ -130,11 +131,13 @@ li:nth-child(4):before {
   background-color: #fafbfc;
   border-color: #1b1f2326;
 }
-.leaderboard-sort > button:hover {
+.leaderboard-sort > button:hover,
+.send-suggestion:hover {
   background-color: #f3f4f6;
   border-color: #1b1f2326;
   transition-duration: 0.1s;
 }
+
 .dice-container {
   display: grid;
   padding: 34px;

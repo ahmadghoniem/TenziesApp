@@ -11,8 +11,8 @@ export default function Die({
   };
 
   function fixDice(e, index) {
-    if (count === 0 || tenzies) return; // don't hold the dice unless the user started the game and don't make him be able to select the dices again else
-    // it will trigger the useEffect's function again and adding his name to the leaderboards again!
+    if (count === 0 || tenzies) return; // don't hold the dice unless the user started the game and don't make him be able to select the dies after he wins
+    // else it will trigger the useEffect's function and will his name to the leaderboards again!
     setheldDice(function (prevState) {
       prevState[index] = prevState[index] !== undefined ? undefined : value;
       return [...prevState];

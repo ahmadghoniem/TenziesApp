@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Footer from "./Footer";
 import { nanoid } from "nanoid";
 
 export default function Suggestions({ userName, setUserName }) {
-  let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
-  let pantryBasketName = "Feedbacks";
+  const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
+  const pantryBasketName = "Feedbacks";
+  const textareaRef = useRef();
 
   // const [gaveFeedback, setGaveFeedback] = useState(() =>
   //   localStorage.getItem("TenziesFeedback")
@@ -18,11 +19,13 @@ export default function Suggestions({ userName, setUserName }) {
     let username = e.target.userName.value;
     username = username !== "" ? username : "Guest";
     setUserName(username);
-    localStorage.setItem("tenziesName", username);
+    // localStorage.setItem("tenziesName", username);
   }
   function sendAnonymousSuggestion(e) {
     e.preventDefault();
     let val = e.target.suggestionTextArea.value;
+    if (val === "") return;
+
     let newid = nanoid();
     var data = JSON.stringify({
       [newid]: val,
@@ -41,12 +44,12 @@ export default function Suggestions({ userName, setUserName }) {
       //console.log(JSON.stringify(response.data));
     });
 
-    localStorage.setItem("TenziesFeedback", true);
-    document.querySelector("[name='suggestionTextArea']").value = "";
-    document.querySelector("[name='suggestionTextArea']").placeholder =
-      "thankyou for your feedback!";
+    //localStorage.setItem("TenziesFeedback", true);
+    textareaRef.current.value = "";
+    textareaRef.current.placeholder = "Thankyou for your feedback❤️!";
   }
-  let FirstTime = () => {
+
+  const FirstTime = () => {
     return (
       <>
         <h2>
@@ -70,7 +73,7 @@ export default function Suggestions({ userName, setUserName }) {
       </>
     );
   };
-  let WelcomeBack = () => {
+  const WelcomeBack = () => {
     return (
       <>
         <h1 style={{ marginBottom: 0 }}>
@@ -88,8 +91,12 @@ export default function Suggestions({ userName, setUserName }) {
         send an annonymous Feedback!📩{" "}
       </h3>
       <form onSubmit={sendAnonymousSuggestion}>
-        <textarea name="suggestionTextArea" className="suggestion-textarea" />
-        <button>send</button>
+        <textarea
+          ref={textareaRef}
+          name="suggestionTextArea"
+          className="suggestion-textarea"
+        />
+        <button className="send-suggestion">send</button>
       </form>
       <Footer />
     </div>
