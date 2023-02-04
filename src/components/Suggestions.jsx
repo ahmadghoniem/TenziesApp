@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "./Footer";
+import { nanoid } from "nanoid";
 
 export default function Suggestions({ userName, setUserName }) {
   let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
@@ -22,9 +23,9 @@ export default function Suggestions({ userName, setUserName }) {
   function sendAnonymousSuggestion(e) {
     e.preventDefault();
     let val = e.target.suggestionTextArea.value;
-
+    let newid = nanoid();
     var data = JSON.stringify({
-      feedback: val,
+      newid: val,
     });
 
     var config = {
