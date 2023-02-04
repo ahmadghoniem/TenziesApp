@@ -10,6 +10,7 @@ import axios from "axios";
 function App() {
   const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
   const pantryBasketName = "Leaderboards";
+  const congratsAudio = new Audio(congratsMp3);
 
   const [dice, setDice] = useState(() => allNewDice());
   const [tenzies, setTenzies] = useState(false);
@@ -27,10 +28,10 @@ function App() {
   const [count, setCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [timeElapsed, setTimeElapsed] = useState(0);
-  const [interval, setIntervalState] = useState(null); //this is what made possible to exit the interval
+  const [interval, setIntervalState] = useState(null);
+  // this is what made possible to stop the interval
 
-  //USEEFFECT load leaderboard from pantry to leaderboard state
-
+  // USEEFFECT to load leaderboard from pantry to leaderboard state
   useEffect(() => {
     const myHeaders = new Headers();
     let arr = [];
@@ -53,7 +54,6 @@ function App() {
     });
   }, []);
 
-  const congratsAudio = new Audio(congratsMp3);
   useEffect(() => {
     if (compareArrays(heldDice, dice)) {
       setTenzies(true);
