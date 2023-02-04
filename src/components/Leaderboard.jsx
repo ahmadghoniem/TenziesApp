@@ -28,6 +28,7 @@ export default function Leaderboard({ leaderboard, userId }) {
   });
   return (
     <div className="leaderboard">
+      <span className="leaderboard-title">Leaderboard</span>
       <img className="lb-icon" src={lbIcon} />
       <div className="leaderboard-sort">
         <span>sort by</span>

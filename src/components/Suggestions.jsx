@@ -55,7 +55,7 @@ export default function Suggestions({ userName, setUserName }) {
             type="text"
             defaultValue={userName}
             name="userName"
-            maxlength="15"
+            maxLength="15"
             placeholder="pick something unique!"
           />
           <button> save </button>
@@ -82,8 +82,11 @@ export default function Suggestions({ userName, setUserName }) {
       {userName === "Guest" ? <FirstTime /> : <WelcomeBack />}
       {!gaveFeedback ? (
         <>
-          {" "}
-          <h2>send an annonymous Feedback!📩 </h2>
+          <h3
+            style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "10px" }}
+          >
+            send an annonymous Feedback!📩{" "}
+          </h3>
           <form onSubmit={sendAnonymousSuggestion}>
             <textarea
               name="suggestionTextArea"

@@ -82,7 +82,7 @@ function App() {
       };
 
       axios(config).then(function (response) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
       });
 
       setLeaderboard((prevLeaderBoard) => {
