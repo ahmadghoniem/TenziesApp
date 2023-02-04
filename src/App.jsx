@@ -126,7 +126,21 @@ function App() {
     // localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
   }, [leaderboard]);
   function compareArrays(a, b) {
-    return JSON.stringify(a) === JSON.stringify(b);
+    if (JSON.stringify(a) === JSON.stringify(b)) {
+      console.log(a, b);
+      let reducedA = new Set(a);
+      let reducedB = new Set(a);
+      let cond1 = reducedA.keys().next().value === reducedB.keys().next().value;
+      let cond2 = reducedA.size === 1 && reducedB.size === 1;
+      console.log(cond1, cond2);
+      if (cond1 && cond2) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   function allNewDice() {
