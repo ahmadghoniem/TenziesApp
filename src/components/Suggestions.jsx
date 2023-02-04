@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Footer from "./Footer";
 
 export default function Suggestions({ userName, setUserName }) {
   let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
@@ -69,7 +70,7 @@ export default function Suggestions({ userName, setUserName }) {
   let WelcomeBack = () => {
     return (
       <>
-        <h1>
+        <h1 style={{ marginBottom: 0 }}>
           Welcome
           <br /> {userName} 👋!
         </h1>
@@ -96,6 +97,7 @@ export default function Suggestions({ userName, setUserName }) {
           <h1>thank you for your feedback!</h1>
         </>
       )}
+      <Footer />
     </div>
   );
 }

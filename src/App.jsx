@@ -5,7 +5,6 @@ import Confetti from "react-confetti";
 import Leaderboard from "./components/Leaderboard";
 import Suggestions from "./components/Suggestions";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import { nanoid } from "nanoid";
 import axios from "axios";
 function App() {
@@ -198,7 +197,6 @@ function App() {
         </div>
         <Suggestions userName={userName} setUserName={setuserName} />
       </main>
-      <Footer />
     </>
   );
 }

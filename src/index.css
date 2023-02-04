@@ -26,6 +26,8 @@ body {
 .Suggestions-board {
   height: 400px;
   width: 250px;
+  display: flex;
+  flex-direction: column;
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 10px;
@@ -189,7 +191,7 @@ h3 {
 }
 .suggestion-textarea {
   width: 100%;
-  height: 20%;
+  height: 100%;
   border-radius: 5px;
   resize: none;
 }
@@ -198,21 +200,6 @@ p.name-info {
   font-size: 12.5px;
 }
 
-.love {
-  color: #666;
-  font-size: 12px;
-  display: block;
-  position: absolute;
-  bottom: 10px;
-  position: absolute;
-  width: 90%;
-  left: 50%;
-  top: 45%;
-  bottom: auto;
-  right: auto;
-  transform: translateX(-50%) translateY(-50%);
-  text-align: center;
-}
 .love a {
   color: #000000;
   text-decoration: none;
@@ -237,6 +224,6 @@ p.name-info {
   }
 }
 footer {
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
+  text-align: center;
 }
