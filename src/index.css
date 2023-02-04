@@ -174,7 +174,7 @@ h3 {
   text-align: center;
 }
 .choosen {
-  background-color: aquamarine;
+  background-color: rgb(89, 227, 145);
 }
 .dice-container-bottom {
   display: flex;
@@ -196,4 +196,47 @@ h3 {
 
 p.name-info {
   font-size: 12.5px;
+}
+
+.love {
+  color: #666;
+  font-size: 12px;
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  top: 45%;
+  bottom: auto;
+  right: auto;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+}
+.love a {
+  color: #000000;
+  text-decoration: none;
+}
+.love .fa {
+  color: #e90606;
+  margin: 0 3px;
+  font-size: 10px;
+  animation: pound 0.35s infinite alternate;
+  -webkit-animation: pound 0.35s infinite alternate;
+}
+
+@-webkit-keyframes pound {
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pound {
+  to {
+    transform: scale(1.1);
+  }
+}
+footer {
+  position: absolute;
+  bottom: 0;
 }
