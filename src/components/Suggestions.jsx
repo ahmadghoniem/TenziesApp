@@ -25,7 +25,7 @@ export default function Suggestions({ userName, setUserName }) {
     let val = e.target.suggestionTextArea.value;
     let newid = nanoid();
     var data = JSON.stringify({
-      newid: val,
+      [newid]: val,
     });
 
     var config = {
