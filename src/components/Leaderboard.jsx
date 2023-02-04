@@ -1,7 +1,7 @@
 import { useState } from "react";
 import lbIcon from "../leaderboardIcon.svg";
 export default function Leaderboard({ leaderboard, userId }) {
-  const [sortBy, setSortBy] = useState("rolls"); // default is to sort by count
+  const [sortBy, setSortBy] = useState("rolls"); // default is to sort by rolls count
   switch (sortBy) {
     case "rolls":
       leaderboard = leaderboard.sort((a, b) => a.count - b.count);
@@ -19,7 +19,7 @@ export default function Leaderboard({ leaderboard, userId }) {
 
   let elesArr = leaderboard.map(({ name, timeTaken, count, id }) => {
     return (
-      <li className={` ${userId === id && "choosen"}`}>
+      <li className={`${userId === id && "choosen"}`}>
         <span>{name}</span>
         <span>{count}</span>
         <span>{timeTaken}</span>

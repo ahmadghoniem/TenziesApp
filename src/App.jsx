@@ -7,16 +7,20 @@ import Suggestions from "./components/Suggestions";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { nanoid } from "nanoid";
+import axios from "axios";
 function App() {
+  let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
+  let pantryBasketName = "Leaderboards";
+
   const [dice, setDice] = useState(() => allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [heldDice, setheldDice] = useState([...Array(10)]);
+
   // const [leaderboard, setLeaderboard] = useState(
   //   () => JSON.parse(localStorage.getItem("leaderboard")) || []
   // );
-  const [leaderboard, setLeaderboard] = useState(
-    () => JSON.parse(localStorage.getItem("leaderboard")) || []
-  );
+
+  const [leaderboard, setLeaderboard] = useState([]);
   const [userName, setuserName] = useState(
     () => localStorage.getItem("tenziesName") || "Guest"
   );
@@ -26,7 +30,29 @@ function App() {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [interval, setIntervalState] = useState(null); //this is what made possible to cancel
 
-  //USEEFFECT STORE A RANDOM NAME AS USERNAME AND DISPLAY IT
+  //USEEFFECT load leaderboard from pantry to leaderboard state
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    let arr = [];
+    myHeaders.append("Content-Type", "application/json");
+
+    var config = {
+      method: "get",
+      url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios(config).then((result) => {
+      result = result.data;
+      Object.keys(result).forEach((e) => {
+        arr.push({ id: e, ...result[e] });
+      });
+      setLeaderboard(arr);
+    });
+  }, []);
 
   const congratsAudio = new Audio(congratsMp3);
   useEffect(() => {
@@ -38,11 +64,29 @@ function App() {
       // push num of rolls and time taken to leaderboard
       let timeDiff = ((timeElapsed - startTime) / 1000).toFixed(2);
 
-      setLeaderboard((prevLeaderBoard) => {
-        const obj = { name: userName, count: count, timeTaken: timeDiff };
-        obj.id = nanoid();
-        setUserId(obj.id);
+      const obj = { name: userName, count: count, timeTaken: timeDiff };
+      obj.id = nanoid();
+      setUserId(obj.id);
+      // update our leaderboard JSON with the new record
 
+      var data = JSON.stringify({
+        [obj.id]: obj,
+      });
+
+      var config = {
+        method: "put",
+        url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config).then(function (response) {
+        console.log(JSON.stringify(response.data));
+      });
+
+      setLeaderboard((prevLeaderBoard) => {
         return [...prevLeaderBoard, obj];
       });
     } else {
@@ -80,7 +124,7 @@ function App() {
   }, interval);
 
   useEffect(() => {
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    // localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
   }, [leaderboard]);
   function compareArrays(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);

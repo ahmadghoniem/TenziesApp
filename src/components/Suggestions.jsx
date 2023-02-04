@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Suggestions({ userName, setUserName }) {
+  let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
+  let pantryBasketName = "Feedbacks";
+
   const [gaveFeedback, setGaveFeedback] = useState(() =>
     localStorage.getItem("TenziesFeedback")
       ? localStorage.getItem("TenziesFeedback")
@@ -18,21 +22,23 @@ export default function Suggestions({ userName, setUserName }) {
     e.preventDefault();
     let val = e.target.suggestionTextArea.value;
 
-    let req = new XMLHttpRequest();
+    var data = JSON.stringify({
+      feedback: val,
+    });
 
-    req.onreadystatechange = () => {
-      if (req.readyState == XMLHttpRequest.DONE) {
-        console.log(req.responseText);
-      }
+    var config = {
+      method: "put",
+      url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
     };
 
-    req.open("POST", "https://api.jsonbin.io/v3/b", true);
-    req.setRequestHeader("Content-Type", "application/json");
-    req.setRequestHeader(
-      "X-Access-Key",
-      "$2b$10$0r6MoV0YrfDFrgMovTarVeWTY4kIuI4lii9cFnPM4JaRfN4a8ii9."
-    );
-    req.send(`{"feedback": "${val}"}`);
+    axios(config).then(function (response) {
+      //console.log(JSON.stringify(response.data));
+    });
+
     localStorage.setItem("TenziesFeedback", true);
     setGaveFeedback(true);
   }
@@ -63,10 +69,10 @@ export default function Suggestions({ userName, setUserName }) {
   let WelcomeBack = () => {
     return (
       <>
-        <h2>
+        <h1>
           Welcome
           <br /> {userName} 👋!
-        </h2>
+        </h1>
       </>
     );
   };
