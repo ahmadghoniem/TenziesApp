@@ -58,7 +58,7 @@ img.lb-icon {
   display: inline-grid;
   align-items: center;
   text-align: center;
-  grid-template-columns: repeat(auto-fill, minmax(59px, 0px));
+  grid-template-columns: repeat(auto-fill, minmax(58.5px, 0px));
   max-width: 256px;
   margin: auto;
   padding: 0;
