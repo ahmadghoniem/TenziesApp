@@ -7,11 +7,11 @@ export default function Suggestions({ userName, setUserName }) {
   let pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
   let pantryBasketName = "Feedbacks";
 
-  const [gaveFeedback, setGaveFeedback] = useState(() =>
-    localStorage.getItem("TenziesFeedback")
-      ? localStorage.getItem("TenziesFeedback")
-      : false
-  );
+  // const [gaveFeedback, setGaveFeedback] = useState(() =>
+  //   localStorage.getItem("TenziesFeedback")
+  //     ? localStorage.getItem("TenziesFeedback")
+  //     : false
+  // );
 
   function setterFunc(e, setUserName) {
     e.preventDefault();
@@ -42,7 +42,9 @@ export default function Suggestions({ userName, setUserName }) {
     });
 
     localStorage.setItem("TenziesFeedback", true);
-    setGaveFeedback(true);
+    document.querySelector("[name='suggestionTextArea']").value = "";
+    document.querySelector("[name='suggestionTextArea']").placeholder =
+      "thankyou for your feedback!";
   }
   let FirstTime = () => {
     return (
@@ -81,26 +83,14 @@ export default function Suggestions({ userName, setUserName }) {
   return (
     <div className="Suggestions-board">
       {userName === "Guest" ? <FirstTime /> : <WelcomeBack />}
-      {!gaveFeedback ? (
-        <>
-          <h3
-            style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "10px" }}
-          >
-            send an annonymous Feedback!📩{" "}
-          </h3>
-          <form onSubmit={sendAnonymousSuggestion}>
-            <textarea
-              name="suggestionTextArea"
-              className="suggestion-textarea"
-            />
-            <button>send</button>
-          </form>
-        </>
-      ) : (
-        <>
-          <h1>thank you for your feedback!</h1>
-        </>
-      )}
+
+      <h3 style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "10px" }}>
+        send an annonymous Feedback!📩{" "}
+      </h3>
+      <form onSubmit={sendAnonymousSuggestion}>
+        <textarea name="suggestionTextArea" className="suggestion-textarea" />
+        <button>send</button>
+      </form>
       <Footer />
     </div>
   );
