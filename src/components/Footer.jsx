@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer>
       <span className="love">
-        Made with❤️ by{" "}
+        Made with❤️ by
         <a
           style={styles}
           href="https://twitter.com/ahmadghoniem_"

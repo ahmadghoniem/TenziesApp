@@ -217,3 +217,10 @@ span.leaderboard-title {
   display: block;
   text-align: center;
 }
+.love {
+  color: #57606a;
+  font-size: 12px;
+}
+.love a {
+  font-weight: bold;
+}
