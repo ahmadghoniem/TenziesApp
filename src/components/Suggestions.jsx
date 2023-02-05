@@ -52,10 +52,10 @@ export default function Suggestions({ userName, setUserName }) {
   const FirstTime = () => {
     return (
       <>
-        <h2>
+        <h1>
           Hello there👋 <br />
           <span>what's your name?</span>
-        </h2>
+        </h1>
         <form onSubmit={(e) => setterFunc(e, setUserName)}>
           <input
             type="text"
@@ -66,10 +66,6 @@ export default function Suggestions({ userName, setUserName }) {
           />
           <button> save </button>
         </form>
-        <p className="name-info">
-          we only need it to be able to add it to the leaderboards
-          <small> (if you made it!)</small>
-        </p>
       </>
     );
   };
@@ -87,7 +83,7 @@ export default function Suggestions({ userName, setUserName }) {
     <div className="Suggestions-board">
       {userName === "Guest" ? <FirstTime /> : <WelcomeBack />}
 
-      <h3 style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "10px" }}>
+      <h3 style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "15px" }}>
         send an annonymous Feedback!📩{" "}
       </h3>
       <form onSubmit={sendAnonymousSuggestion}>
