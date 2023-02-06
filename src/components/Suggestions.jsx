@@ -63,6 +63,7 @@ export default function Suggestions({ userName, setUserName }) {
             name="userName"
             maxLength="15"
             placeholder="pick something unique!"
+            style={{ marginRight: "5px", borderRadius: "5px" }}
           />
           <button> save </button>
         </form>
@@ -83,7 +84,7 @@ export default function Suggestions({ userName, setUserName }) {
     <div className="Suggestions-board">
       {userName === "Guest" ? <FirstTime /> : <WelcomeBack />}
 
-      <h3 style={{ fontSize: "1.4rem", textAlign: "left", marginTop: "15px" }}>
+      <h3 style={{ fontSize: "1.45rem", textAlign: "left", marginTop: "15px" }}>
         send an annonymous Feedback!📩{" "}
       </h3>
       <form onSubmit={sendAnonymousSuggestion}>
