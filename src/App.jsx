@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Die from "./components/Die";
 import congratsMp3 from "./congrats.mp3";
 import Confetti from "react-confetti";
@@ -7,6 +7,7 @@ import Suggestions from "./components/Suggestions";
 import Header from "./components/Header";
 import { nanoid } from "nanoid";
 import axios from "axios";
+import TimeElapsedDisp from "./components/TimeElapsedDisp";
 function App() {
   const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
   const pantryBasketName = "Leaderboards";
@@ -15,11 +16,9 @@ function App() {
   const [dice, setDice] = useState(() => allNewDice());
   const [tenzies, setTenzies] = useState(false);
   const [heldDice, setheldDice] = useState([...Array(10)]);
-
   // const [leaderboard, setLeaderboard] = useState(
   //   () => JSON.parse(localStorage.getItem("leaderboard")) || []
   // );
-
   const [leaderboard, setLeaderboard] = useState([]);
   const [userName, setuserName] = useState(
     () => localStorage.getItem("tenziesName") || "Guest"
@@ -27,9 +26,9 @@ function App() {
   const [userId, setUserId] = useState(0);
   const [count, setCount] = useState(0);
   const [startTime, setStartTime] = useState(0);
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const [interval, setIntervalState] = useState(null);
-  // this is what made possible to stop the interval
+  const [interval, setInterval] = useState(null);
+
+  // this is what made possisetIntervalble to stop the interval
 
   // USEEFFECT to load leaderboard from pantry to leaderboard state
   useEffect(() => {
@@ -57,11 +56,12 @@ function App() {
   useEffect(() => {
     if (compareArrays(heldDice, dice)) {
       setTenzies(true);
-      setIntervalState(null);
+      setInterval(null);
       congratsAudio.play();
 
       // push num of rolls and time taken to leaderboard
-      let timeDiff = ((timeElapsed - startTime) / 1000).toFixed(2);
+      let endTime = new Date();
+      let timeDiff = ((endTime - startTime) / 1000).toFixed(2);
 
       const obj = { name: userName, count: count, timeTaken: timeDiff };
       obj.id = nanoid();
@@ -94,36 +94,6 @@ function App() {
   }, [heldDice]);
   // the reason why we have heldDice as a dependency instead of dice array is because the last move would be holding the last dice not rolling the last dice
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef(); // we used useRef so the component won't rerender once it gets changed
-
-    // Remember the latest function.
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-      function tick() {
-        savedCallback.current(); // execute the function that updates the current
-      }
-
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-
-        //cleaning function set for the future (autoexecuted when "delay" change)
-        return () => {
-          //console.log("clear Interval: " + id);
-          clearInterval(id);
-        };
-      }
-    }, [delay]);
-  }
-
-  useInterval(() => {
-    setTimeElapsed(new Date().getTime());
-  }, interval);
-
   // useEffect(() => {
   //   // localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
   // }, [leaderboard]);
@@ -134,10 +104,9 @@ function App() {
       // further check if there's only one unique element is selected on both (hence the new Set()) and equal on both
       let reducedA = new Set(a);
       let reducedB = new Set(a);
-
       let cond1 = [...reducedA][0] === [...reducedB][0];
-      let cond2 = reducedA.size === 1 && reducedB.size === 1;
-
+      let cond2 = reducedA.size === 1 && reducedB.size === 1; // best practice
+      //let cond2 = (reducedA.size === reducedB.size) == 1; // shorter and should work as reducedA.size === reducedB.size would work
       return cond1 && cond2; // returns true or false based on the conditions
     } else {
       return false;
@@ -154,7 +123,7 @@ function App() {
       if (count === 0) {
         // start the counter but don't roll the dices that have been initialized the user just started !
         setStartTime(new Date().getTime());
-        setIntervalState(10);
+        setInterval(10);
         return;
       }
       setDice((prevDiceSet) => {
@@ -170,7 +139,7 @@ function App() {
       setDice(allNewDice());
       setCount(0);
       setStartTime(0);
-      setTimeElapsed(0);
+      setInterval(null);
     }
   }
   let diceArr = dice.map((e, i) => (
@@ -204,10 +173,7 @@ function App() {
             <button className="roll-dice" onClick={rollDice}>
               {!tenzies ? `${count === 0 ? `Start!` : `Roll`}` : `Play again!`}
             </button>
-            <p className="time-elapsed">
-              {((timeElapsed - startTime) / 1000).toFixed(2) >= 0 &&
-                ((timeElapsed - startTime) / 1000).toFixed(2)}
-            </p>
+            <TimeElapsedDisp interval={interval} startTime={startTime} />
           </div>
         </div>
         <Suggestions userName={userName} setUserName={setuserName} />

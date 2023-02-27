@@ -1,4 +1,4 @@
-export default function Footer() {
+function Footer() {
   let styles = {
     color: "#5d46f4",
   };
@@ -17,3 +17,4 @@ export default function Footer() {
     </footer>
   );
 }
+export default Footer;

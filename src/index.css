@@ -115,8 +115,11 @@ li:nth-child(4):before {
   color: white;
   content: "3rd";
 }
+.leaderboard-sort > input[type="radio"] {
+  display: none;
+}
 
-.leaderboard-sort > button,
+.leaderboard-sort > label,
 form > button {
   display: inline-block;
   outline: 0;
@@ -131,9 +134,10 @@ form > button {
   background-color: #fafbfc;
   border-color: #1b1f2326;
 }
-.leaderboard-sort > button:hover,
+.leaderboard-sort > label:hover,
+.leaderboard-sort input:checked + label,
 form > button:hover {
-  background-color: #f3f4f6;
+  background-color: #e9eaed;
   border-color: #1b1f2326;
   transition-duration: 0.1s;
 }
