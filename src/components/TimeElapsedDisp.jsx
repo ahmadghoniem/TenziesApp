@@ -35,10 +35,7 @@ const TimeElapsedDisp = ({ startTime, interval }) => {
     setTimeElapsed(new Date().getTime());
   }, interval);
   let time =
-    startTime && timeElapsed
-      ? ((timeElapsed - startTime) / 1000).toFixed(2)
-      : 0; // both of them needs to be a value bigger than zero else display zero
-
+    startTime && timeElapsed && ((timeElapsed - startTime) / 1000).toFixed(2); // both of them needs to be a value bigger than zero else display zero
   // on the very first render of this component elapsedTime is set to zero and then when startTime is passed it's re-rendered
   // but since they value of elapsed time is yet to be updated by UseInterval custom hook, time = oldValue-startTime
   return <p className="time-elapsed">{time > 0 ? time : 0}</p>;
