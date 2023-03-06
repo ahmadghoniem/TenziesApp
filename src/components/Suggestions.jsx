@@ -2,7 +2,7 @@ import { useRef } from "react";
 import axios from "axios";
 import Footer from "./Footer";
 
-export default function Suggestions({ userName, setUserName }) {
+export default function Suggestions({ userName, dispatch }) {
   const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
   const pantryBasketName = "Feedbacks";
   const textareaRef = useRef();
@@ -13,37 +13,38 @@ export default function Suggestions({ userName, setUserName }) {
   //     : false
   // );
 
-  function setterFunc(e, setUserName) {
+  function setterFunc(e) {
     e.preventDefault();
-    let username = e.target.userName.value;
+    let username = e.currentTarget.userName.value;
+    console.log(username);
     username = username !== "" ? username : "Guest";
-    setUserName(username);
-    // localStorage.setItem("tenziesName", username);
+    dispatch({
+      type: "update_state",
+      payload: { propName: "userName", value: username },
+    });
+    localStorage.setItem("tenziesName", username);
   }
-  function sendAnonymousSuggestion(e) {
+  function sendSuggestion(e) {
     e.preventDefault();
-    let val = e.target.suggestionTextArea.value;
+    let val = textareaRef.current.value;
     if (val === "") return;
 
-    let newid = nanoid();
-    var data = JSON.stringify({
-      [newid]: val,
-    });
-
-    var config = {
+    let randId = crypto.randomUUID();
+    const config = {
       method: "put",
       url: `https://getpantry.cloud/apiv1/pantry/${pantryID}/basket/${pantryBasketName}`,
       headers: {
         "Content-Type": "application/json",
       },
-      data: data,
+      data: JSON.stringify({
+        [randId]: val,
+      }),
     };
 
     axios(config).then(function (response) {
       //console.log(JSON.stringify(response.data));
     });
 
-    //localStorage.setItem("TenziesFeedback", true);
     textareaRef.current.value = "";
     textareaRef.current.placeholder = "Thankyou for your feedback❤️!";
   }
@@ -55,7 +56,7 @@ export default function Suggestions({ userName, setUserName }) {
           Hello there👋 <br />
           <span>what's your name?</span>
         </h1>
-        <form onSubmit={(e) => setterFunc(e, setUserName)}>
+        <form onSubmit={setterFunc}>
           <input
             type="text"
             defaultValue={userName}
@@ -86,12 +87,8 @@ export default function Suggestions({ userName, setUserName }) {
       <h3 style={{ fontSize: "1.45rem", textAlign: "left", marginTop: "15px" }}>
         send an annonymous Feedback!📩{" "}
       </h3>
-      <form onSubmit={sendAnonymousSuggestion}>
-        <textarea
-          ref={textareaRef}
-          name="suggestionTextArea"
-          className="suggestion-textarea"
-        />
+      <form onSubmit={sendSuggestion}>
+        <textarea ref={textareaRef} className="suggestion-textarea" />
         <button className="send-suggestion">send</button>
       </form>
       <Footer />
