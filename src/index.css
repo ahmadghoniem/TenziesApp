@@ -163,6 +163,7 @@ form > button:hover {
   font-size: 25px;
   text-align: center;
   cursor: pointer;
+  user-select: none;
 }
 .roll-dice {
   background-color: #5d46f4;
