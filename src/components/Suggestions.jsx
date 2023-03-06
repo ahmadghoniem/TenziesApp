@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 import Footer from "./Footer";
-import { nanoid } from "nanoid";
 
 export default function Suggestions({ userName, setUserName }) {
   const pantryID = "319f2108-7202-4669-9979-bfbd309ebdd7";
